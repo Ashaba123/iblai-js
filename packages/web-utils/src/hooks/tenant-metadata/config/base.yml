@@ -1,0 +1,13 @@
+# Base configuration for general settings across all SPAs
+settings:
+  - slug: "enable_public_profile_toggle_display"
+    label: "Enable public profile toggle display"
+    defaultValue: false
+    description: "Allow users to toggle their profile visibility"
+    type: "boolean"
+    
+  - slug: "support_email"
+    label: "Support email"
+    defaultValue: "support@iblai.zendesk.com"
+    description: "Default support email address"
+    type: "string" 

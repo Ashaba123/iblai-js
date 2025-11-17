@@ -1,0 +1,20 @@
+# MentorAI platform configuration
+spa: "mentorAI"
+settings:
+  - slug: "show_help"
+    label: "Show Help menu"
+    defaultValue: true
+    description: "Display the help menu in the mentor platform"
+    type: "boolean"
+    
+  - slug: "show_faq"
+    label: "Show FAQ"
+    defaultValue: true
+    description: "Display the FAQ section in the mentor platform"
+    type: "boolean"
+    
+  - slug: "help_center_url"
+    label: "Help Center URL"
+    defaultValue: "https://docs.ibl.ai"
+    description: "URL for the help center documentation"
+    type: "string" 
