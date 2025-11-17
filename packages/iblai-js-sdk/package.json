@@ -49,9 +49,9 @@
   },
   "homepage": "https://github.com/iblai/iblai-sdk#readme",
   "dependencies": {
-    "@iblai/data-layer": "^0.2.0",
-    "@iblai/web-utils": "^0.2.0",
-    "@iblai/web-containers": "^0.2.0"
+    "@iblai/data-layer": "^0.3.0",
+    "@iblai/web-utils": "^0.3.0",
+    "@iblai/web-containers": "^0.3.0"
   },
   "devDependencies": {
     "@rollup/plugin-commonjs": "25.0.8",
