@@ -1,0 +1,84 @@
+import { Meta } from '@storybook/blocks';
+
+<Meta title="Introduction" />
+
+# IBL AI SDK
+
+Welcome to the IBL AI SDK component documentation!
+
+## What is IBL AI SDK?
+
+The IBL AI SDK is a TypeScript SDK for building AI-powered educational applications with the IBL AI Platform. It provides:
+
+- **Data Layer**: RTK Query API slices and hooks for data fetching
+- **Web Utils**: React providers, hooks, and utilities
+- **Web Containers**: React UI components for web applications
+- **Native Components**: React Native components for mobile apps
+
+## Installation
+
+```bash
+npm install @iblai/iblai-js-sdk
+# or
+yarn add @iblai/iblai-js-sdk
+# or
+pnpm add @iblai/iblai-js-sdk
+```
+
+## Quick Start
+
+```tsx
+import { useGetMentorsQuery, AuthProvider } from '@iblai/iblai-js-sdk';
+
+function App() {
+  return (
+    <AuthProvider>
+      <MentorsList />
+    </AuthProvider>
+  );
+}
+
+function MentorsList() {
+  const { data, isLoading } = useGetMentorsQuery({
+    org: 'my-org',
+    limit: 10,
+  });
+
+  if (isLoading) return <div>Loading...</div>;
+
+  return (
+    <div>
+      {data?.results.map((mentor) => (
+        <div key={mentor.id}>{mentor.name}</div>
+      ))}
+    </div>
+  );
+}
+```
+
+## Component Documentation
+
+This Storybook contains:
+
+- **Interactive examples** of all UI components
+- **Component props documentation** with types
+- **Usage examples** and best practices
+- **Visual testing** of different states and variants
+
+## Contributing
+
+To add a new component:
+
+1. Create your component with TypeScript types
+2. Add JSDoc comments for all props
+3. Create a `.stories.tsx` file (see Example/Button)
+4. Document usage and variants
+5. Test your component
+
+See the [Contributing Guide](https://github.com/iblai/iblai-sdk/blob/main/CONTRIBUTING.md) for details.
+
+## Resources
+
+- [GitHub Repository](https://github.com/iblai/iblai-sdk)
+- [NPM Package](https://www.npmjs.com/package/@iblai/iblai-js-sdk)
+- [IBL AI Platform](https://ibl.ai)
