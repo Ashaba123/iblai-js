@@ -1,345 +1,96 @@
 # Contributing to IBL AI SDK
 
-Thank you for your interest in contributing to the IBL AI SDK! This document provides guidelines and instructions for contributing to this project.
-
-## Table of Contents
-
-- [Code of Conduct](#code-of-conduct)
-- [Getting Started](#getting-started)
-- [Development Setup](#development-setup)
-- [Project Structure](#project-structure)
-- [Development Workflow](#development-workflow)
-- [Coding Standards](#coding-standards)
-- [Testing](#testing)
-- [Submitting Changes](#submitting-changes)
-- [Release Process](#release-process)
-
-## Code of Conduct
-
-This project adheres to a code of conduct that we expect all contributors to follow. Please read and follow our code of conduct to ensure a welcoming and inclusive environment for everyone.
+Thank you for contributing to the IBL AI SDK!
 
 ## Getting Started
 
 ### Prerequisites
 
-Before you begin, ensure you have the following installed:
+- Node.js >= 18.0.0
+- pnpm >= 9.0.0
 
-- **Node.js** >= 18.0.0
-- **pnpm** >= 9.0.0
-- **Git**
+### Setup
 
-### Fork and Clone
-
-1. Fork the repository on GitHub
-2. Clone your fork locally:
-
-```bash
-git clone https://github.com/YOUR_USERNAME/iblai-sdk.git
-cd iblai-sdk
-```
-
-3. Add the upstream repository:
-
-```bash
-git remote add upstream https://github.com/iblai/iblai-sdk.git
-```
-
-## Development Setup
-
-1. Install dependencies:
-
-```bash
-pnpm install
-```
-
-2. Build all packages:
-
-```bash
-pnpm build
-```
-
-3. Run tests to ensure everything is set up correctly:
-
-```bash
-pnpm test
-```
+1. Fork and clone the repository
+2. Install dependencies: `pnpm install`
+3. Build the package: `pnpm build`
+4. Start Storybook: `pnpm storybook`
 
 ## Project Structure
 
 ```
-iblai-sdk/
-├── packages/
-│   ├── data-layer/          # RTK Query API slices and data management
-│   │   ├── src/
-│   │   │   ├── features/    # API slices by feature
-│   │   │   ├── types/       # TypeScript types
-│   │   │   └── index.ts     # Main entry point
-│   │   ├── package.json
-│   │   └── rollup.config.js
-│   ├── web-utils/           # Utilities, providers, and hooks
-│   │   ├── src/
-│   │   │   ├── providers/   # React context providers
-│   │   │   ├── hooks/       # Custom React hooks
-│   │   │   ├── utils/       # Helper functions
-│   │   │   └── index.ts
-│   │   └── package.json
-│   ├── web-containers/      # React UI components and containers
-│   │   ├── src/
-│   │   │   ├── components/  # Reusable components
-│   │   │   ├── hooks/       # Component-specific hooks
-│   │   │   └── index.ts
-│   │   └── package.json
-│   └── iblai/              # Unified package (re-exports)
-│       ├── src/
-│       │   └── index.ts    # Re-exports all packages
-│       └── package.json
-├── examples/               # Example applications
-├── .github/               # GitHub workflows and config
-├── turbo.json            # Turborepo configuration
-├── pnpm-workspace.yaml   # pnpm workspace config
-└── package.json          # Root package.json
+packages/iblai-js/src/
+├── data-layer/       # RTK Query API slices and hooks
+├── web-utils/        # Providers, hooks, and utilities
+├── web-containers/   # React UI components for web
+└── native-components/ # React Native components
 ```
 
 ## Development Workflow
 
-### Creating a Feature Branch
+### Adding New Features
 
-Always create a new branch for your work:
+1. Create a feature branch: `git checkout -b feature/your-feature`
+2. Add your code in the appropriate module directory
+3. Document your code with JSDoc comments
+4. Create Storybook stories for UI components (`.stories.tsx`)
+5. Write tests
+6. Run checks: `pnpm typecheck && pnpm format`
+7. Create a changeset: `pnpm changeset`
+8. Commit and push your changes
 
-```bash
-git checkout -b feature/your-feature-name
-# or
-git checkout -b fix/your-bug-fix
-```
+### Code Standards
 
-### Making Changes
-
-1. **Make your changes** in the appropriate package(s)
-2. **Write or update tests** for your changes
-3. **Run linter and fix any issues:**
-
-```bash
-pnpm lint
-pnpm lint:fix
-```
-
-4. **Run type checking:**
-
-```bash
-pnpm typecheck
-```
-
-5. **Run tests:**
-
-```bash
-pnpm test
-```
-
-### Watch Mode
-
-For faster development, use watch mode:
-
-```bash
-# Watch all packages
-pnpm watch
-
-# Watch a specific package
-pnpm watch:data-layer
-pnpm watch:web-utils
-pnpm watch:web-containers
-```
-
-## Coding Standards
-
-### TypeScript
-
-- Use TypeScript for all new code
-- Provide proper type definitions
-- Avoid `any` types when possible
-- Document complex types with JSDoc comments
-
-```typescript
-/**
- * Represents a mentor configuration
- */
-interface MentorConfig {
-  id: string;
-  name: string;
-  settings?: MentorSettings;
-}
-```
-
-### Code Style
-
-We use Prettier for code formatting. The configuration is defined in `.prettierrc`.
-
-```bash
-# Format all files
-pnpm format
-
-# Check formatting
-pnpm format:check
-```
-
-### Naming Conventions
-
-- **Files**: Use kebab-case for file names (`my-component.tsx`)
+- **TypeScript**: Use strict typing, avoid `any`
+- **Files**: Use kebab-case (`my-component.tsx`)
 - **Components**: Use PascalCase (`MyComponent`)
-- **Functions/Variables**: Use camelCase (`getUserData`)
-- **Constants**: Use UPPER_SNAKE_CASE (`API_BASE_URL`)
-- **Types/Interfaces**: Use PascalCase (`UserData`, `ApiResponse`)
+- **Functions**: Use camelCase (`getUserData`)
+- **Documentation**: Add JSDoc comments for all exports
 
 ### Commit Messages
 
-Follow the [Conventional Commits](https://www.conventionalcommits.org/) specification:
+Follow [Conventional Commits](https://www.conventionalcommits.org/):
 
 ```
 feat: add new feature
-fix: resolve bug in component
-docs: update README
+fix: resolve bug
+docs: update documentation
 chore: update dependencies
-refactor: restructure code
-test: add missing tests
 ```
 
-Examples:
-```
-feat(data-layer): add getMentors query hook
-fix(web-utils): correct auth provider token refresh
-docs(readme): add installation instructions
-```
+### Documenting Components
 
-## Testing
+All UI components must have:
 
-### Writing Tests
+1. **JSDoc comments** with description and examples
+2. **Storybook stories** showing usage
+3. **TypeScript types** for props
 
-- Place test files next to the code they test
-- Use `.test.ts` or `.test.tsx` extension
-- Follow the Arrange-Act-Assert pattern
+Example:
 
-```typescript
-describe('useAuth', () => {
-  it('should return authenticated user', () => {
-    // Arrange
-    const { result } = renderHook(() => useAuth());
-
-    // Act
-    act(() => {
-      result.current.login({ username: 'test', password: 'test' });
-    });
-
-    // Assert
-    expect(result.current.isAuthenticated).toBe(true);
-  });
-});
-```
-
-### Running Tests
-
-```bash
-# Run all tests
-pnpm test
-
-# Watch mode
-pnpm test:watch
-
-# Coverage report
-pnpm test:coverage
+```tsx
+/**
+ * Button component for user interactions
+ *
+ * @example
+ * ```tsx
+ * <Button onClick={() => console.log('clicked')}>
+ *   Click me
+ * </Button>
+ * ```
+ */
+export const Button = ({ onClick, children }) => (
+  <button onClick={onClick}>{children}</button>
+);
 ```
 
 ## Submitting Changes
 
-### Before Submitting
-
-1. Ensure all tests pass
-2. Run linter and fix any issues
-3. Update documentation if needed
-4. Add/update tests for your changes
-5. Create a changeset (see below)
-
-### Creating a Changeset
-
-We use [Changesets](https://github.com/changesets/changesets) for version management:
-
-```bash
-pnpm changeset
-```
-
-Follow the prompts to:
-1. Select the packages you've modified
-2. Choose the version bump type (major, minor, patch)
-3. Write a summary of your changes
-
-### Pull Request Process
-
-1. **Push your branch** to your fork:
-
-```bash
-git push origin feature/your-feature-name
-```
-
-2. **Open a Pull Request** on GitHub
-
-3. **Fill out the PR template** with:
-   - Description of changes
-   - Related issue numbers
-   - Testing performed
-   - Screenshots (if applicable)
-
-4. **Respond to feedback** from reviewers
-
-5. **Ensure CI passes** - All automated checks must pass
-
-### PR Guidelines
-
-- Keep PRs focused on a single feature or fix
-- Write clear, descriptive PR titles
-- Include tests for new features
-- Update documentation as needed
-- Reference related issues
-
-## Release Process
-
-Releases are managed through Changesets and GitHub Actions.
-
-### For Maintainers
-
-1. **Merge approved PRs** with changesets
-
-2. **Version packages:**
-
-```bash
-pnpm changeset:version
-```
-
-3. **Review and commit** the version changes
-
-4. **Publish to npm:**
-
-```bash
-pnpm changeset:publish
-```
-
-5. **Push tags** to GitHub:
-
-```bash
-git push --follow-tags
-```
-
-## Additional Resources
-
-- [Monorepo Guide](https://monorepo.tools)
-- [Turborepo Documentation](https://turbo.build/repo/docs)
-- [pnpm Workspaces](https://pnpm.io/workspaces)
-- [Conventional Commits](https://www.conventionalcommits.org/)
-- [Changesets Documentation](https://github.com/changesets/changesets)
+1. Push your branch to your fork
+2. Open a Pull Request
+3. Ensure CI passes
+4. Respond to review feedback
 
 ## Questions?
 
-If you have questions, please:
-
-1. Check existing [Issues](https://github.com/iblai/iblai-sdk/issues)
-2. Start a [Discussion](https://github.com/iblai/iblai-sdk/discussions)
-3. Reach out to the maintainers
-
-Thank you for contributing to IBL AI SDK! 🎉
+Open an issue or discussion on GitHub.

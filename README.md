@@ -1,44 +1,24 @@
 # IBL AI SDK
 
-[![npm version](https://img.shields.io/npm/v/@iblai/iblai.svg)](https://www.npmjs.com/package/@iblai/iblai)
+[![npm version](https://img.shields.io/npm/v/@iblai/iblai-js.svg)](https://www.npmjs.com/package/@iblai/iblai-js)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 TypeScript SDK for the IBL AI Platform - providing data layer, utilities, and React components for building AI-powered educational applications.
 
-## Features
-
-- 🎯 **Type-Safe API** - Full TypeScript support with auto-generated types
-- 📦 **Modular Packages** - Use only what you need
-- ⚡ **RTK Query Integration** - Powerful data fetching and caching
-- 🎨 **React Components** - Pre-built UI components and containers
-- 🛠️ **Developer Tools** - Comprehensive utilities and hooks
-- 🔒 **Built-in Auth** - Authentication providers and utilities
-
-## Packages
-
-This monorepo contains the following packages:
-
-- **[@iblai/data-layer](./packages/data-layer)** - API slices, RTK Query hooks, and data management
-- **[@iblai/web-utils](./packages/web-utils)** - Utilities, providers, hooks, and helper functions
-- **[@iblai/web-containers](./packages/web-containers)** - React UI components and containers
-- **[@iblai/iblai](./packages/iblai)** - Unified package that re-exports all three packages
-
-## Quick Start
-
-### Installation
+## Installation
 
 ```bash
-# Install the unified package
-npm install @iblai/iblai
-
-# Or install individual packages
-npm install @iblai/data-layer @iblai/web-utils @iblai/web-containers
+npm install @iblai/iblai-js
+# or
+yarn add @iblai/iblai-js
+# or
+pnpm add @iblai/iblai-js
 ```
 
-### Basic Usage
+## Basic Usage
 
 ```typescript
-import { useGetMentorsQuery, AuthProvider, Button } from '@iblai/iblai';
+import { useGetMentorsQuery, AuthProvider } from '@iblai/iblai-js';
 
 function App() {
   return (
@@ -83,104 +63,47 @@ cd iblai-sdk
 # Install dependencies
 pnpm install
 
-# Build all packages
+# Build the package
 pnpm build
 
-# Run tests
-pnpm test
+# Start Storybook for component documentation
+pnpm storybook
 ```
 
-### Development Workflow
-
-```bash
-# Watch mode for all packages
-pnpm watch
-
-# Watch specific package
-pnpm watch:data-layer
-pnpm watch:web-utils
-pnpm watch:web-containers
-
-# Run linter
-pnpm lint
-
-# Type checking
-pnpm typecheck
-
-# Format code
-pnpm format
-```
-
-## Documentation
-
-- [Getting Started Guide](./docs/getting-started.md)
-- [API Reference](./docs/api-reference.md)
-- [Examples](./examples)
-- [Contributing Guide](./CONTRIBUTING.md)
-- [Cursor AI Instructions](./CURSOR.md)
-
-## Examples
-
-Check out the [examples directory](./examples) for complete working examples:
-
-- [Basic Usage](./examples/basic-usage)
-- [Next.js Integration](./examples/nextjs-app)
-- [Authentication](./examples/auth-example)
-
-## Architecture
+### Project Structure
 
 ```
 iblai-sdk/
 ├── packages/
-│   ├── data-layer/      # RTK Query API slices and hooks
-│   ├── web-utils/       # Utilities, providers, and hooks
-│   ├── web-containers/  # React UI components
-│   └── iblai/          # Unified package (re-exports all)
-├── examples/           # Example applications
-└── .github/           # CI/CD workflows
+│   └── iblai-js/
+│       └── src/
+│           ├── data-layer/       # API slices and RTK Query hooks
+│           ├── web-utils/        # Providers, hooks, and utilities
+│           ├── web-containers/   # React UI components for web
+│           └── native-components/ # React Native components
+├── .storybook/                   # Storybook configuration
+└── README.md
 ```
+
+### Scripts
+
+- `pnpm build` - Build the package
+- `pnpm watch` - Watch mode for development
+- `pnpm storybook` - Start Storybook component documentation
+- `pnpm build-storybook` - Build static Storybook site
+- `pnpm typecheck` - Run TypeScript type checking
+- `pnpm format` - Format code with Prettier
+
+## Documentation
+
+- **[API Reference](./API.md)** - Complete API documentation
+- **[Storybook](http://localhost:6006)** - Interactive component documentation (run `pnpm storybook`)
+- **[Contributing Guide](./CONTRIBUTING.md)** - How to contribute
 
 ## Contributing
 
-We welcome contributions! Please see our [Contributing Guide](./CONTRIBUTING.md) for details.
-
-### Development Process
-
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. Make your changes
-4. Run tests (`pnpm test`)
-5. Commit your changes (`git commit -m 'feat: add amazing feature'`)
-6. Push to the branch (`git push origin feature/amazing-feature`)
-7. Open a Pull Request
-
-## Publishing
-
-This project uses [Changesets](https://github.com/changesets/changesets) for version management and publishing.
-
-```bash
-# Create a changeset
-pnpm changeset
-
-# Version packages
-pnpm changeset:version
-
-# Publish to npm
-pnpm changeset:publish
-```
+See [CONTRIBUTING.md](./CONTRIBUTING.md) for detailed guidelines.
 
 ## License
 
 MIT © [IBL AI](https://ibl.ai)
-
-## Support
-
-- [Documentation](https://docs.ibl.ai)
-- [GitHub Issues](https://github.com/iblai/iblai-sdk/issues)
-- [Community Discussions](https://github.com/iblai/iblai-sdk/discussions)
-
-## Links
-
-- [IBL AI Platform](https://ibl.ai)
-- [NPM Package](https://www.npmjs.com/package/@iblai/iblai)
-- [GitHub Repository](https://github.com/iblai/iblai-sdk)

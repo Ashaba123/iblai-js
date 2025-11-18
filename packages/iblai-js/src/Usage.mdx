@@ -1,0 +1,299 @@
+import { Meta } from '@storybook/blocks';
+
+<Meta title="Usage Guide" />
+
+# IBL AI SDK Usage Guide
+
+Welcome to the IBL AI SDK! This comprehensive SDK provides everything you need to build powerful AI-powered education applications.
+
+## Package Overview
+
+The SDK re-exports from three core packages:
+
+### 📊 Data Layer (`@iblai/data-layer`)
+RTK Query API slices and hooks for data fetching and state management.
+
+**Key Features:**
+- **API Hooks**: Pre-built hooks for all IBL AI Platform endpoints
+- **Automatic Caching**: Built-in request caching and deduplication
+- **Type Safety**: Full TypeScript support with auto-generated types
+- **Optimistic Updates**: Instant UI updates with automatic rollback on errors
+
+**Common Use Cases:**
+- Fetching mentor data
+- Managing chat sessions
+- User authentication
+- Analytics and reporting
+
+### 🛠️ Web Utils (`@iblai/web-utils`)
+Utilities, providers, and custom hooks for React applications.
+
+**Key Features:**
+- **Context Providers**: AuthProvider, MentorProvider, TenantProvider
+- **Custom Hooks**: Chat management, subscriptions, profile updates
+- **Utilities**: Date formatting, platform detection, helpers
+
+**Common Use Cases:**
+- Setting up authentication
+- Managing application state
+- Building chat interfaces
+- Handling subscriptions
+
+### 🎨 Web Containers (`@iblai/web-containers`)
+Pre-built React components and UI containers.
+
+**Key Features:**
+- **Profile Components**: Account settings, billing, security
+- **Analytics Components**: Charts, stats, reports
+- **UI Components**: Buttons, modals, forms (built with shadcn/ui)
+- **Notification System**: Toast notifications and alerts
+
+**Common Use Cases:**
+- Building user profiles
+- Displaying analytics dashboards
+- Creating admin interfaces
+- Showing notifications
+
+## Installation
+
+```bash
+npm install @iblai/iblai-js
+# or
+pnpm add @iblai/iblai-js
+# or
+yarn add @iblai/iblai-js
+```
+
+## Peer Dependencies
+
+You'll need to install these peer dependencies:
+
+```bash
+npm install @reduxjs/toolkit react react-dom react-redux
+```
+
+## Quick Start
+
+### 1. Set up Redux Store
+
+```typescript
+import { configureStore } from '@reduxjs/toolkit';
+import { setupListeners } from '@reduxjs/toolkit/query';
+import { apiSlice } from '@iblai/iblai-js';
+
+export const store = configureStore({
+  reducer: {
+    [apiSlice.reducerPath]: apiSlice.reducer,
+  },
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware().concat(apiSlice.middleware),
+});
+
+setupListeners(store.dispatch);
+```
+
+### 2. Wrap Your App with Providers
+
+```typescript
+import { Provider } from 'react-redux';
+import { AuthProvider, TenantProvider, MentorProvider, LocalStorageService, ANONYMOUS_USERNAME } from '@iblai/iblai-js';
+import { store } from './store';
+
+function App() {
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const fullPathname = pathname + (searchParams.toString() ? `?${searchParams.toString()}` : '');
+
+  return (
+    <Provider store={store}>
+      <AuthProvider
+        redirectToAuthSpa={redirectToAuthSpa}
+        hasNonExpiredAuthToken={hasNonExpiredAuthToken}
+        username={username || ''}
+        pathname={fullPathname}
+        storageService={LocalStorageService.getInstance()}
+        fallback={<Spinner />}
+      >
+        <TenantProvider
+          currentTenant={tenantKey || ''}
+          requestedTenant={tenantKeyParams || ''}
+          saveCurrentTenant={saveCurrentTenant}
+          saveUserTenants={saveUserTenants}
+          handleTenantSwitch={handleTenantSwitch}
+          fallback={<Spinner />}
+        >
+          <MentorProvider
+            username={username || ANONYMOUS_USERNAME}
+            isAdmin={isAdmin}
+            mainTenantKey={config.mainTenantKey()}
+            redirectToNoMentorsPage={() => router.push('/no-mentors')}
+            redirectToCreateMentor={() => router.push('/create-mentor')}
+            redirectToMentor={(id) => router.push(`/mentor/${id}`)}
+            onLoadMentorsPermissions={(perms) => console.log('Loaded permissions:', perms)}
+            fallback={<Spinner />}
+          >
+            <YourApp />
+          </MentorProvider>
+        </TenantProvider>
+      </AuthProvider>
+    </Provider>
+  );
+}
+```
+
+### 3. Use Hooks in Your Components
+
+```typescript
+import { useGetMentorsQuery, useAuth } from '@iblai/iblai-js';
+
+function MentorsList() {
+  const { user } = useAuth();
+  const { data: mentors, isLoading, error } = useGetMentorsQuery({
+    platform: user?.platform,
+  });
+
+  if (isLoading) return <div>Loading...</div>;
+  if (error) return <div>Error loading mentors</div>;
+
+  return (
+    <div>
+      {mentors?.map((mentor) => (
+        <div key={mentor.id}>{mentor.name}</div>
+      ))}
+    </div>
+  );
+}
+```
+
+## Documentation Structure
+
+### Data Layer
+- **[RTK Query Hooks](/?path=/docs/data-layer-hooks-mentor--docs)** - API hooks for data fetching
+- **[Constants](/?path=/docs/data-layer-constants--docs)** - API endpoints and configuration
+- **[Types](/?path=/docs/data-layer-types--docs)** - TypeScript type definitions
+
+### Web Utils
+- **[Providers](/?path=/docs/web-utils-providers-authprovider--docs)** - Context providers for state management
+- **[Hooks](/?path=/docs/web-utils-hooks-usechat--docs)** - Custom React hooks
+- **[Utilities](/?path=/docs/web-utils-utilities-helpers--docs)** - Helper functions and utilities
+
+### Web Containers
+- **[Profile Components](/?path=/docs/web-containers-profile-account--docs)** - User profile and settings
+- **[Analytics Components](/?path=/docs/web-containers-analytics-overview--docs)** - Charts and statistics
+- **[UI Components](/?path=/docs/web-containers-ui-button--docs)** - Reusable UI elements
+- **[Notifications](/?path=/docs/web-containers-notifications-toast--docs)** - Notification system
+
+## Best Practices
+
+### 1. Always Use TypeScript
+The SDK is built with TypeScript and provides full type safety. Always enable strict mode:
+
+```json
+{
+  "compilerOptions": {
+    "strict": true
+  }
+}
+```
+
+### 2. Handle Loading and Error States
+Always handle loading and error states when using API hooks:
+
+```typescript
+const { data, isLoading, error, isFetching } = useGetMentorsQuery(params);
+
+if (isLoading) return <Spinner />;
+if (error) return <ErrorMessage error={error} />;
+if (!data) return null;
+
+// Render your component
+```
+
+### 3. Use Optimistic Updates
+For better UX, use optimistic updates for mutations:
+
+```typescript
+const [updateMentor] = useUpdateMentorMutation();
+
+await updateMentor({
+  id: mentorId,
+  // Optimistic update will show changes immediately
+  ...updates,
+});
+```
+
+### 4. Leverage Caching
+RTK Query automatically caches responses. Use tags for cache invalidation:
+
+```typescript
+// The mutation automatically invalidates the cache
+const [deleteMentor] = useDeleteMentorMutation();
+await deleteMentor(mentorId);
+// useGetMentorsQuery will automatically refetch
+```
+
+## Common Patterns
+
+### Authentication Flow
+
+```typescript
+import { AuthProvider, useAuth } from '@iblai/iblai-js';
+
+function LoginButton() {
+  const { login, logout, user, isAuthenticated } = useAuth();
+
+  if (isAuthenticated) {
+    return <button onClick={logout}>Logout {user.email}</button>;
+  }
+
+  return <button onClick={() => login(credentials)}>Login</button>;
+}
+```
+
+### Chat Integration
+
+```typescript
+import { useChatV2 } from '@iblai/iblai-js';
+
+function ChatInterface() {
+  const {
+    messages,
+    sendMessage,
+    isLoading,
+  } = useChatV2({
+    mentorId: 'mentor-id',
+    userId: 'user-id',
+  });
+
+  return (
+    <div>
+      {messages.map(msg => <Message key={msg.id} {...msg} />)}
+      <ChatInput onSend={sendMessage} disabled={isLoading} />
+    </div>
+  );
+}
+```
+
+### Analytics Dashboard
+
+```typescript
+import { AnalyticsOverview, ChartFiltersProvider } from '@iblai/iblai-js';
+
+function Dashboard() {
+  return (
+    <ChartFiltersProvider>
+      <AnalyticsOverview platformId="platform-id" />
+    </ChartFiltersProvider>
+  );
+}
+```
+
+## Support and Resources
+
+- **[API Documentation](https://docs.ibl.ai)** - Complete API reference
+- **[GitHub](https://github.com/iblai/iblai-sdk)** - Source code and issues
+- **[Examples](https://github.com/iblai/iblai-sdk/tree/main/examples)** - Sample applications
+
+## Next Steps
+
+Explore the stories in the sidebar to see detailed documentation and examples for each exported item.

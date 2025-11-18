@@ -6,10 +6,10 @@ This document provides instructions for AI-assisted development using Cursor IDE
 
 **IBL AI SDK** is a TypeScript monorepo containing packages for building AI-powered educational applications. It consists of:
 
-- `@iblai/data-layer` - RTK Query API slices and data management
-- `@iblai/web-utils` - React providers, hooks, and utilities
-- `@iblai/web-containers` - Reusable React UI components
-- `@iblai/iblai` - Unified package re-exporting all three packages
+- `@iblai/iblai-js` - Unified package containing data layer, utilities, and React components
+  - Includes `data-layer/` - RTK Query API slices and data management
+  - Includes `web-utils/` - React providers, hooks, and utilities
+  - Includes `web-containers/` - Reusable React UI components
 
 ## Technology Stack
 

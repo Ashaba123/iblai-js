@@ -34,10 +34,7 @@
     "noFallthroughCasesInSwitch": true,
     "skipLibCheck": true,
     "paths": {
-      "@iblai/data-layer": ["./packages/data-layer/src"],
-      "@iblai/web-utils": ["./packages/web-utils/src"],
-      "@iblai/web-containers": ["./packages/web-containers/src"],
-      "@iblai/iblai": ["./packages/iblai/src"]
+      "@iblai/iblai-js": ["./packages/iblai-js/src"]
     }
   },
   "include": ["packages/**/*"],
