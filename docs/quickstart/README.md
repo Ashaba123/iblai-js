@@ -135,9 +135,9 @@ Create a configuration file for your environment variables:
 ```typescript
 // lib/config.ts
 export const config = {
-  authUrl: () => process.env.NEXT_PUBLIC_AUTH_URL || 'https://auth.iblstudios.com',
-  dmUrl: () => process.env.NEXT_PUBLIC_DM_URL || 'https://dm.iblstudios.com',
-  lmsUrl: () => process.env.NEXT_PUBLIC_LMS_URL || 'https://platform.iblstudios.com',
+  authUrl: () => process.env.NEXT_PUBLIC_AUTH_URL || 'https://login.iblai.app',
+  dmUrl: () => process.env.NEXT_PUBLIC_DM_URL || 'https://base.manager.iblai.app',
+  lmsUrl: () => process.env.NEXT_PUBLIC_LMS_URL || 'https://learn.iblai.app',
   mainTenantKey: () => process.env.NEXT_PUBLIC_MAIN_TENANT_KEY || 'iblai',
   appName: 'your-app-name', // e.g., 'mentor', 'skills', 'my-custom-app'
 };
@@ -1121,7 +1121,7 @@ export function LoginPage() {
           Sign in to continue to your account
         </p>
         <LoginButton
-          authUrl="https://auth.iblstudios.com"
+          authUrl="https://login.iblai.app"
           appName="my-app"
           label="Sign In"
           className="btn btn-primary"
