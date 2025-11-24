@@ -8,7 +8,7 @@
     "emitDeclarationOnly": false,
     "declarationDir": "dist",
     "strict": true,
-    "moduleResolution": "node",
+    "moduleResolution": "bundler",
     "esModuleInterop": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
@@ -18,7 +18,9 @@
     "jsx": "react",
     "baseUrl": ".",
     "paths": {
-      "@iblai/*": ["./src/*"]
+      "@iblai/*": ["./src/*"],
+      "@iblai/web-containers/next": ["./node_modules/@iblai/web-containers/dist/next/index.d.ts"],
+      "@iblai/web-containers/sso": ["./node_modules/@iblai/web-containers/dist/sso/index.d.ts"]
     },
     "types": ["node"]
   },

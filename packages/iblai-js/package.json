@@ -11,6 +11,11 @@
       "types": "./dist/index.d.ts",
       "import": "./dist/index.esm.js",
       "require": "./dist/index.js"
+    },
+    "./next": {
+      "types": "./dist/next/index.d.ts",
+      "import": "./dist/next/index.esm.js",
+      "require": "./dist/next/index.js"
     }
   },
   "files": [
@@ -49,9 +54,9 @@
   },
   "homepage": "https://github.com/iblai/iblai-sdk#readme",
   "dependencies": {
-    "@iblai/data-layer": "^1.0.0",
-    "@iblai/web-utils": "^1.0.0",
-    "@iblai/web-containers": "^1.0.0"
+    "@iblai/data-layer": "^1.1.2",
+    "@iblai/web-utils": "^1.1.2",
+    "@iblai/web-containers": "^1.1.2"
   },
   "devDependencies": {
     "@rollup/plugin-commonjs": "25.0.8",
@@ -69,9 +74,19 @@
   },
   "peerDependencies": {
     "@reduxjs/toolkit": "^2.0.0",
-    "react": "^18.0.0 || ^19.0.0",
-    "react-dom": "^18.0.0 || ^19.0.0",
-    "react-redux": "^9.0.0"
+    "next": ">=13.0.0",
+    "react": "19.1.0",
+    "react-dom": "19.1.0",
+    "react-redux": "^9.0.0",
+    "react-router-dom": "^6.0.0 || ^7.0.0"
+  },
+  "peerDependenciesMeta": {
+    "next": {
+      "optional": true
+    },
+    "react-router-dom": {
+      "optional": true
+    }
   },
   "packageManager": "pnpm@10.11.0",
   "publishConfig": {
