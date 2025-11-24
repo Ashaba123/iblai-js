@@ -16,6 +16,11 @@
       "types": "./dist/next/index.d.ts",
       "import": "./dist/next/index.esm.js",
       "require": "./dist/next/index.js"
+    },
+    "./sso": {
+      "types": "./dist/sso/index.d.ts",
+      "import": "./dist/sso/index.esm.js",
+      "require": "./dist/sso/index.js"
     }
   },
   "files": [
@@ -56,7 +61,7 @@
   "dependencies": {
     "@iblai/data-layer": "^1.1.2",
     "@iblai/web-utils": "^1.1.2",
-    "@iblai/web-containers": "^1.1.2"
+    "@iblai/web-containers": "^1.1.3"
   },
   "devDependencies": {
     "@rollup/plugin-commonjs": "25.0.8",

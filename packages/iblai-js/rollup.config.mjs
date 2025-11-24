@@ -79,6 +79,24 @@ export default [
     plugins: commonPlugins,
     external: commonExternal,
   },
+  // SSO utilities entry point (framework-agnostic)
+  {
+    input: "src/sso/index.ts",
+    output: [
+      {
+        file: "dist/sso/index.js",
+        format: "cjs",
+        sourcemap: true,
+      },
+      {
+        file: "dist/sso/index.esm.js",
+        format: "esm",
+        sourcemap: true,
+      },
+    ],
+    plugins: commonPlugins,
+    external: commonExternal,
+  },
   // Type declarations for main entry
   {
     input: "src/index.ts",
@@ -94,6 +112,17 @@ export default [
   {
     input: "src/next/index.ts",
     output: [{ file: "dist/next/index.d.ts", format: "es" }],
+    plugins: [
+      dts({
+        respectExternal: true,
+      }),
+    ],
+    external: dtsExternal,
+  },
+  // Type declarations for SSO entry
+  {
+    input: "src/sso/index.ts",
+    output: [{ file: "dist/sso/index.d.ts", format: "es" }],
     plugins: [
       dts({
         respectExternal: true,
