@@ -70,13 +70,21 @@ pnpm add file:../iblai-sdk/packages/iblai-js
 
 ### Peer Dependencies
 
-The SDK requires these peer dependencies:
+The SDK requires these peer dependencies. **Note:** This SDK is built for **React 19.1.0** and uses React 19 features.
 
 ```bash
-npm install react react-dom @reduxjs/toolkit react-redux
+npm install react@19.1.0 react-dom@19.1.0 @reduxjs/toolkit react-redux
 ```
 
+> **React 19 Requirement:** The SDK uses React 19 features and hooks. If you're on React 18, you may encounter compatibility issues. We recommend upgrading to React 19.1.0 for full compatibility.
+
 ### Styling
+
+The SDK is built with **Tailwind CSS** and **shadcn/ui** components. The UI components use:
+
+- **Tailwind CSS v3** - Utility-first CSS framework
+- **shadcn/ui** - Re-usable components built on Radix UI primitives
+- **CSS Variables** - For theming and brand customization
 
 The SDK includes a pre-configured CSS design system with ibl.ai brand colors, components, and utilities.
 
@@ -278,7 +286,7 @@ import {
   syncSsoDataToCookies,        // Sync SSO data to cookies for cross-SPA sharing
   setCookie,                   // Set a cookie with proper domain
   getBaseDomain,               // Get base domain for cookie sharing
-} from '@iblai/iblai-js';
+} from '@iblai/iblai-js/sso';
 ```
 
 ###### Quick Implementation (Recommended)
@@ -289,7 +297,7 @@ Use `handleSsoCallback` for a simple one-liner implementation:
 // pages/SsoLogin.tsx (React Router)
 import { useEffect } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
-import { handleSsoCallback } from '@iblai/iblai-js';
+import { handleSsoCallback } from '@iblai/iblai-js/sso';
 
 export function SsoLoginPage() {
   const navigate = useNavigate();
@@ -325,7 +333,7 @@ import {
   parseSsoData,
   DEFAULT_SSO_STORAGE_KEYS,
   type SsoStorageKeys
-} from '@iblai/iblai-js';
+} from '@iblai/iblai-js/sso';
 
 interface SsoLoginPageProps {
   /**
@@ -421,7 +429,7 @@ import {
   initializeLocalStorageWithObject,
   parseSsoData,
   DEFAULT_SSO_STORAGE_KEYS
-} from '@iblai/iblai-js';
+} from '@iblai/iblai-js/sso';
 
 interface SsoLoginOptions {
   redirectPathKey?: string;
@@ -486,7 +494,7 @@ export async function handleSsoLogin(options: SsoLoginOptions = {}): Promise<voi
 <script setup lang="ts">
 import { onMounted } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
-import { initializeLocalStorageWithObject, parseSsoData, DEFAULT_SSO_STORAGE_KEYS } from '@iblai/iblai-js';
+import { initializeLocalStorageWithObject, parseSsoData, DEFAULT_SSO_STORAGE_KEYS } from '@iblai/iblai-js/sso';
 
 const route = useRoute();
 const router = useRouter();
@@ -1253,6 +1261,12 @@ All API hooks follow the pattern `use[Entity][Action]Query/Mutation`:
 
 ## Styling Guide
 
+The SDK's UI components are built with **Tailwind CSS** and **shadcn/ui**:
+
+- **Tailwind CSS v3** - All components use Tailwind utility classes for styling
+- **shadcn/ui** - Components are built on [shadcn/ui](https://ui.shadcn.com/), which uses Radix UI primitives for accessibility and behavior
+- **CSS Variables** - Theming is done through CSS custom properties, compatible with Tailwind's theming system
+
 The SDK includes a comprehensive CSS design system at `@iblai/iblai-js/styles/base.css`.
 
 ### Quick Start with Styles
@@ -1773,8 +1787,8 @@ This error occurs when importing from the wrong entry point. Create React App an
 // ❌ Wrong - will fail in CRA
 import { SsoLogin } from '@iblai/iblai-js/next';
 
-// ✅ Correct - use framework-agnostic utilities
-import { handleSsoCallback, parseSsoData } from '@iblai/iblai-js';
+// ✅ Correct - use framework-agnostic utilities from /sso subpath
+import { handleSsoCallback, parseSsoData } from '@iblai/iblai-js/sso';
 ```
 
 See the "React Router (Non-Next.js Projects)" section for complete examples of framework-agnostic SSO handling.

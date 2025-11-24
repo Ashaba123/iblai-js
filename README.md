@@ -1,6 +1,6 @@
 # ibl.ai SDK
 
-[![npm version](https://ibl.ai/images/iblai-logo.png)](https://www.npmjs.com/package/@iblai/iblai-js)
+<a href="https://www.npmjs.com/package/@iblai/iblai-js"><img src="https://ibl.ai/images/iblai-logo.png" alt="npm version" height="32"></a>
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 TypeScript SDK for the [ibl.ai](https://ibl.ai) Platform - providing data layer, utilities, and React components for building AI-powered educational applications.
